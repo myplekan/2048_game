@@ -101,6 +101,8 @@ function cheker() {
 }
 
 function moveHorizontal(key) {
+  let movedOrMerged = false;
+
   for (let i = 0; i < grid.length; i++) {
     const filterRow = grid[i].filter(item => item !== 0);
     const filterValue = move(filterRow, key);
@@ -119,15 +121,24 @@ function moveHorizontal(key) {
       }
 
       for (let j = 0; j < grid.length; j++) {
+        if (grid[i][j] !== filterValue[j]) {
+          movedOrMerged = true;
+        }
         grid[i][j] = filterValue[j];
       }
     }
   }
-  randomCell();
+
+  if (movedOrMerged) {
+    randomCell();
+  }
+
   createBoard();
 }
 
 function moveVertical(key) {
+  let movedOrMerged = false;
+
   for (let i = 0; i < grid.length; i++) {
     const column = [
       grid[0][i],
@@ -150,12 +161,18 @@ function moveVertical(key) {
       }
     }
 
-    grid[0][i] = filterValue[0];
-    grid[1][i] = filterValue[1];
-    grid[2][i] = filterValue[2];
-    grid[3][i] = filterValue[3];
+    for (let j = 0; j < grid.length; j++) {
+      if (grid[j][i] !== filterValue[j]) {
+        movedOrMerged = true;
+      }
+      grid[j][i] = filterValue[j];
+    }
   }
-  randomCell();
+
+  if (movedOrMerged) {
+    randomCell();
+  }
+
   createBoard();
 }
 
